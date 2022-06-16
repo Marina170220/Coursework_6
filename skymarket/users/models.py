@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.core.validators import MinLengthValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
@@ -13,11 +14,14 @@ class UserRoles:
 
 
 class User(AbstractBaseUser):
-    first_name = models.CharField(verbose_name="Имя", help_text="Введите имя, макс 64 символа", max_length=64)
-    last_name = models.CharField(verbose_name="Фамилия", help_text="Введите фамилию, макс 64 символа", max_length=64)
-    phone = models.CharField(verbose_name="Телефон для связи", help_text="Укажите телефон для связи", max_length=128)
+    first_name = models.CharField(verbose_name="Имя", help_text="Введите имя, макс 64 символа", max_length=64,
+                                  validators=[MinLengthValidator(1)])
+    last_name = models.CharField(verbose_name="Фамилия", help_text="Введите фамилию, макс 64 символа", max_length=64,
+                                 validators=[MinLengthValidator(1)])
+    phone = models.CharField(verbose_name="Телефон для связи", help_text="Укажите телефон для связи", max_length=128,
+                             validators=[MinLengthValidator(1)])
     email = models.EmailField(verbose_name="Email address", help_text="Укажите электронную почту", unique=True,
-                              max_length=254)
+                              max_length=254, validators=[MinLengthValidator(1)])
     role = models.CharField(choices=UserRoles.roles, default=UserRoles.USER, max_length=5)
     is_active = models.BooleanField(default=True, verbose_name="Аккаунт активен",
                                     help_text="Укажите, активен ли аккаунт")
