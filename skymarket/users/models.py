@@ -31,7 +31,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', 'role']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
 
     @property
     def is_superuser(self):

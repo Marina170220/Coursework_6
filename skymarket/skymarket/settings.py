@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "users",
     "ads",
     "redoc",
+    'django_filters',
 ]
 
 MIDDLEWARE = [
