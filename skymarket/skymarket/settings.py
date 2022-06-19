@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -39,18 +40,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "users",
     "djoser",
     "corsheaders",
-    'rest_framework_simplejwt',
-    "drf_spectacular",
-    "rest_framework",
-    "users",
     "ads",
     "redoc",
-    'django_filters',
+    "django_filters",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
+    "skymarket.middleware.RequestTimeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -89,6 +91,14 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=120),
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
 
 DJOSER = {
     'SERIALIZERS': {
