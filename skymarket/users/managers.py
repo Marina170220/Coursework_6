@@ -3,9 +3,6 @@ from django.contrib.auth.models import (
 )
 
 
-# TODO здесь должен быть менеджер для модели Юзера.
-# TODO Поищите эту информацию в рекомендациях к проекту
-
 class UserManager(BaseUserManager):
     """
     функция создания пользователя — в нее мы передаем обязательные поля
@@ -39,7 +36,7 @@ class UserManager(BaseUserManager):
             last_name=last_name,
             phone=phone,
             password=password
-            )
+        )
 
         user.role = 'admin'
         user.save(using=self._db)

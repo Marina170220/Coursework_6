@@ -1,8 +1,17 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 
 from users.models import User
 
-admin.site.register(User)
-# TODO Aдмика для пользователя - как реализовать ее можно подсмотреть в документаци django
-# TODO Обычно её всегда оформляют, но в текущей задачи делать её не обязательно
+admin.site.empty_value_display = '(None)'
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'email', 'role', 'is_active', 'is_staff')
+    list_display_links = ('first_name',)
+    list_filter = ('is_active',)
+    ordering = ('first_name',)
+    empty_value_display = 'unknown'
+    radio_fields = {"role": admin.VERTICAL}
+    search_fields = ['email']
+    search_help_text = "Поиск пользователя по email"

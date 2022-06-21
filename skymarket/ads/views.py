@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 
 from ads.filters import AdModelFilter
@@ -37,11 +38,14 @@ class AdViewSet(viewsets.ModelViewSet):
         serializer.save(author=user)
 
     def get_queryset(self):
-        user = self.request.user
-        if self.kwargs.get('pk') == "me":
-            self.queryset = self.queryset.filter(author=user).all()
+        if self.action == "me":
+            return Ad.objects.filter(author=self.request.user).all()
 
         return Ad.objects.all()
+
+    @action(detail=False, methods=["get"])
+    def me(self, request, *args, **kwargs):
+        return super().list(self, request, *args, **kwargs)
 
     def get_permissions(self):
         if self.action == 'list':

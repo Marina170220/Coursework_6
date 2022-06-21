@@ -27,8 +27,10 @@ class Ad(models.Model):
 class Comment(models.Model):
     text = models.CharField(verbose_name="Комментарий", help_text="Оставьте свой комментарий здесь", max_length=1000,
                             validators=[MinLengthValidator(1)])
-    author = models.ForeignKey(User, verbose_name="Автор комментария", related_name="comments", on_delete=models.CASCADE)
-    ad = models.ForeignKey(Ad, verbose_name="Объявление", related_name="comments", on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name="Автор комментария", help_text="Укажите автора комментария",
+                               related_name="comments", on_delete=models.CASCADE)
+    ad = models.ForeignKey(Ad, verbose_name="Объявление", help_text="Укажите объявление для комментария",
+                           related_name="comments", on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name="Дата и время создания комментария", auto_now_add=True)
 
     class Meta:

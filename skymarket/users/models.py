@@ -20,9 +20,10 @@ class User(AbstractBaseUser):
                                  validators=[MinLengthValidator(1)])
     phone = models.CharField(verbose_name="Телефон для связи", help_text="Укажите телефон для связи", max_length=128,
                              validators=[MinLengthValidator(1)])
-    email = models.EmailField(verbose_name="Email address", help_text="Укажите электронную почту", unique=True,
+    email = models.EmailField(verbose_name="Email адрес", help_text="Укажите электронную почту", unique=True,
                               max_length=254, validators=[MinLengthValidator(1)])
-    role = models.CharField(choices=UserRoles.roles, default=UserRoles.USER, max_length=5)
+    role = models.CharField(choices=UserRoles.roles, default=UserRoles.USER, max_length=5,
+                            verbose_name="Роль пользователя", help_text="Укажите роль пользователя")
     is_active = models.BooleanField(default=True, verbose_name="Аккаунт активен",
                                     help_text="Укажите, активен ли аккаунт")
     image = models.ImageField(verbose_name="Аватарка", help_text="Разместите Вашу фотографию", null=True, blank=True,
